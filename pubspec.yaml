@@ -1,6 +1,6 @@
 name: slider_2_builder
 description: A new Flutter project.
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -12,11 +12,12 @@ dependencies:
     sdk: flutter
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
+  dio: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-  
+
   uses-material-design: true
