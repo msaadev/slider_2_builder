@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:slider_2_builder/core/components/card/slider_card.dart';
 import 'package:slider_2_builder/model/album.dart';
 
 class HomeView extends StatefulWidget {
@@ -13,7 +17,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    future = getAlbums;
+    future = getAlbums1;
   }
 
   @override
@@ -38,11 +42,16 @@ class _HomeViewState extends State<HomeView> {
                     itemCount: data.length,
                     itemBuilder: (c, i, _) {
                       var item = data[i];
-                      return Container(
-                        child: Image.network('${item['url']}'),
+                      return SliderCard(
+                        url: item['url'],
                       );
                     },
-                    options: CarouselOptions());
+                    options: CarouselOptions(
+                      aspectRatio: 1920 / 1080,
+                      autoPlay: true,
+                      viewportFraction: 1,
+                      enlargeCenterPage: true,
+                    ));
               } else if (s.hasError) {
                 return Center(child: Text('Lütfen Tekrar Deneyiniz'));
               } else {
@@ -59,5 +68,11 @@ class _HomeViewState extends State<HomeView> {
     var getData =
         await Dio().get('https://jsonplaceholder.typicode.com/photos');
     return getData.data;
+  }
+
+  Future<List> get getAlbums1 async {
+    var getData = await rootBundle.loadString('assets/dummy/dummy_json.json');
+    var data = json.decode(getData);
+    return data;
   }
 }
