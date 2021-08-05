@@ -8,7 +8,7 @@ class SliderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.all(4),
       child: ClipRRect(        
         borderRadius: BorderRadius.circular(5),
         child: CachedNetworkImage(
