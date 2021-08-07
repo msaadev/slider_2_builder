@@ -1,11 +1,7 @@
 import 'dart:convert';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:slider_2_builder/core/components/card/slider_card.dart';
-import 'package:slider_2_builder/model/album.dart';
+import 'package:slider_2_builder/core/components/slider/home_slider.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -17,17 +13,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    future = getAlbums1;
+    future = getAlbums;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          getAlbums;
-        },
-      ),
+     
       appBar: AppBar(
         title: Text('Home View'),
       ),
@@ -38,20 +30,7 @@ class _HomeViewState extends State<HomeView> {
             builder: (context, AsyncSnapshot s) {
               if (s.hasData) {
                 var data = s.data;
-                return CarouselSlider.builder(
-                    itemCount: data.length,
-                    itemBuilder: (c, i, _) {
-                      var item = data[i];
-                      return SliderCard(
-                        url: item['url'],
-                      );
-                    },
-                    options: CarouselOptions(
-                      aspectRatio: 1920 / 1080,
-                      autoPlay: true,
-                      viewportFraction: 1,
-                      enlargeCenterPage: true,
-                    ));
+                return HomeSlider(data: data);
               } else if (s.hasError) {
                 return Center(child: Text('Lütfen Tekrar Deneyiniz'));
               } else {
@@ -64,13 +43,8 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Future<List> get getAlbums async {
-    var getData =
-        await Dio().get('https://jsonplaceholder.typicode.com/photos');
-    return getData.data;
-  }
 
-  Future<List> get getAlbums1 async {
+  Future<List> get getAlbums async {
     var getData = await rootBundle.loadString('assets/dummy/dummy_json.json');
     var data = json.decode(getData);
     return data;
