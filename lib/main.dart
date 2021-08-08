@@ -3,6 +3,7 @@ import 'package:slider_2_builder/view/home/home_view.dart';
  
 void main() => runApp(MyApp());
  
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
